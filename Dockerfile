@@ -1,7 +1,8 @@
 FROM golang:1.21-alpine AS build-stage
 WORKDIR /app
 COPY ./ ./
-RUN CGO_ENABLED=0 GOOS=linux go mod download && go build -o webapp
+RUN go mod download && \
+    CGO_ENABLED=0 GOOS=linux go build -mod=readonly -o webapp .
 
 FROM alpine
 
